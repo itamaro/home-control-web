@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>A/C Control</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{STATIC_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{STATIC_URL}}ac.css" rel="stylesheet">
+    <script src="{{STATIC_URL}}assets/js/jquery.js"></script>
+    <script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+	<script src="{{STATIC_URL}}ac.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">A/C Control</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Main</a></li>
+            <li class="disabled"><a href="#about">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>A/C Control</h1>
+		<button type="button" class="btn btn-primary" id="btnSendAcCommand" data-loading-text="Sending...">Send A/C Command</button>
+		<button type="button" class="btn btn-primary" id="btnLoadImage" data-loading-text="Loading...">Update Image</button>
+		<p>
+		<table align="center" border="3">
+		<tr><td><div id="webcamArea"></div></td></tr>
+		<tr height="10"><td></td></tr>
+		<tr><td>Arduino Response: <div id="acCommandArea"></div></td></tr>
+		</table>
+		</p>
+      </div>
+
+    </div><!-- /.container -->
+
+  </body>
+</html>

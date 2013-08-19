@@ -1,8 +1,9 @@
 # Create your views here.
 from django.http import HttpResponse
+from django.shortcuts import render
 
 def home(request):
-    return HttpResponse('Home stub')
+    return render(request, 'AC/index.html', {})
 
 def command(request):
     return HttpResponse('Command stub')
