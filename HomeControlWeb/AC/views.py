@@ -26,7 +26,12 @@ def home(request):
     return render(request, 'index.html', {})
 
 def command(request):
-    return HttpResponse('Command stub')
+    try:
+        res = urllib.urlopen(HOME_CONTROL_ACCMD_RPC_URL).read()
+    except IOError, ex:
+        logger.error('Failed Arduino RPC: %s' % (ex))
+        res = 'No Response'
+    return HttpResponse(res)
 
 def webcam(request):
     try:
