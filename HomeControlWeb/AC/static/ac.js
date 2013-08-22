@@ -11,6 +11,10 @@
 		});
 	}
 	
+	function updateImage__ProxyMethod(){
+		$('#webcamArea').html('<img src="/AC/webcam.png" />');
+	}
+	
 	function init(){
 		// bind click to update image button
 		$("#btnLoadImage").click(function(){
