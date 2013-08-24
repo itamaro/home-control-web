@@ -4,7 +4,10 @@ import logging
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 
+# The secret key for accessing the home control interface - default is empty
+HOME_CONTROL_SECRET_KEY = getattr(settings, 'HOME_CONTROL_SECRET_KEY', '')
 HOME_CONTROL_WEBCAM_RPC_URL = getattr(settings, 'HOME_CONTROL_WEBCAM_RPC_URL',
                                 'http://localhost:8000/webcam.png')
 HOME_CONTROL_ACCMD_RPC_URL = getattr(settings, 'HOME_CONTROL_ACCMD_RPC_URL',
@@ -22,10 +25,17 @@ HOME_CONTROL_WEBCAM_IMAGE_URL = getattr(settings,
 
 logger = logging.getLogger(__name__)
 
+def _checkauth(request):
+    key = request.GET.get('key', '')
+    if key != HOME_CONTROL_SECRET_KEY:
+        raise PermissionDenied()
+
 def home(request):
+    _checkauth(request)
     return render(request, 'index.html', {})
 
 def command(request):
+    _checkauth(request)
     try:
         res = urllib.urlopen(HOME_CONTROL_ACCMD_RPC_URL).read()
     except IOError, ex:
@@ -34,6 +44,7 @@ def command(request):
     return HttpResponse(res)
 
 def webcam(request):
+    _checkauth(request)
     try:
         urllib.urlretrieve(HOME_CONTROL_WEBCAM_RPC_URL,
                            HOME_CONTROL_LOCAL_WEBCAM_IMAGE_PATH)
@@ -46,5 +57,6 @@ def webcam(request):
     return HttpResponse('WebCam stub')
 
 def webcam_proxy_png(request):
+    _checkauth(request)
     return HttpResponse(urllib.urlopen(HOME_CONTROL_WEBCAM_RPC_URL).read(),
                         mimetype='image/png')
