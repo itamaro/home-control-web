@@ -48,7 +48,7 @@ def webcam(request):
     try:
         urllib.urlretrieve(HOME_CONTROL_WEBCAM_RPC_URL,
                            HOME_CONTROL_LOCAL_WEBCAM_IMAGE_PATH)
-        res = '<img src="/static/img/webcam/webcam-image.png" />'
+        res = '<img src="%s" />' % (HOME_CONTROL_WEBCAM_IMAGE_URL)
     except IOError, ex:
         logger.error('Failed WebCam RPC: %s' % (ex))
         res = 'Failed Retrieving Image'
