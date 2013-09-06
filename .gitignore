@@ -2,5 +2,6 @@
 *.pot
 *.pyc
 local_settings.py
-static/img/webcam/webcam-image.png
+*~
+static/img/webcam/*
 HomeControlRpcServer/beep-thresh
