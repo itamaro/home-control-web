@@ -2,39 +2,47 @@
 	
 	init();
 	
-	function get_key_url(){
-		var key = $.url().param('key');
-		return (key ? '?key=' + key : '');
-	}
-	
-	function updateImage(){
-		$("#btnLoadImage").button('loading');
-		$('#webcamArea').html('<img src="/static/img/loading.gif" />');
-		$.get("webcam" + get_key_url(), function(content){
-			$('#webcamArea').html(content);
-			$("#btnLoadImage").button('reset');
+	function send_ac_command(btn, pwr){
+		$(btn).button('loading');
+		$.get("command?" + $.param({"key": $.url().param('key'),
+					"mode": $('#acMode').val(),
+					"fan": $('#acFan').val(),
+					"temp": $('#acTemp').val(),
+					"power": pwr}), function(content){
+			$("#acDebugArea").html(
+				$("<div />").addClass("alert alert-info alert-dismissable").html(
+				$("<button />").addClass("close").attr({"type": "button",
+				"data-dismiss": "alert", "aria-hidden": "true"}).html("&times"))
+				.append('Arduino Response: "' + content + '"'));
+			$("#acDebugArea").show();
+			if ("Beep Timeout" == content){
+				alert_class = "alert-danger";
+				msg = "Could not verify command. You should probably try again.";
+			}else if ("Success" == content){
+				alert_class = "alert-success";
+				msg = "Command executed successfully";
+			}
+			$("#acFeedbackArea").html(
+				$("<div />").addClass("alert alert-dismissable").addClass(alert_class).html(
+				$("<button />").addClass("close").attr({"type": "button",
+				"data-dismiss": "alert", "aria-hidden": "true"}).html("&times"))
+				.append(msg));
+			$("#acFeedbackArea").show();
+			$(btn).button('reset');
 		});
-	}
-	
-	function updateImage__ProxyMethod(){
-		$('#webcamArea').html('<img src="webcam.png' + get_key_url() + '" />');
 	}
 	
 	function init(){
-		// bind click to update image button
-		$("#btnLoadImage").click(function(){
-			updateImage();
+		// bind click to send A/C power toggle button
+		$("#btnAcPower").click(function(){
+			send_ac_command("#btnAcPower", "toggle");
 		});
-		// bind click to send A/C command button
-		$("#btnSendAcCommand").click(function(){
-			$("#btnSendAcCommand").button('loading');
-			$.get("command" + get_key_url(), function(content){
-				$('#acCommandArea').html(content);
-				$("#btnSendAcCommand").button('reset');
-			});
+		// bind click to send A/C settings update button
+		$("#btnAcUpdate").click(function(){
+			send_ac_command("#btnAcUpdate", "leave");
 		});
 		
-		updateImage();
+		$('.selectpicker').selectpicker();
 	}
 	
 });
