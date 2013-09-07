@@ -28,9 +28,21 @@ def home(request):
 
 def command(request):
     _checkauth(request)
-    try:
-        res = urllib.urlopen(HOME_CONTROL_ACCMD_RPC_URL).read()
-    except IOError, ex:
-        logger.error('Failed Arduino RPC: %s' % (ex))
-        res = 'No Response'
+    ac_params = {
+        'mode': request.GET.get('mode'),
+        'fan': request.GET.get('fan'),
+        'temp': request.GET.get('temp'),
+        'pwr': request.GET.get('power'),
+    }
+    if not all(ac_params.values()):
+        # at least one parameter missing
+        res = 'Missing Param'
+    else:
+        try:
+            
+            res = urllib.urlopen(HOME_CONTROL_ACCMD_RPC_URL + '?' +
+                                 urllib.urlencode(ac_params)).read()
+        except IOError, ex:
+            logger.error('Failed Arduino RPC: %s' % (ex))
+            res = 'No Response'
     return HttpResponse(res)
