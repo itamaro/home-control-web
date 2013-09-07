@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'AC',
+    'cam',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -158,6 +159,10 @@ LOGGING = {
             'propagate': True,
         },
         'AC': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'cam': {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
