@@ -16,7 +16,7 @@
 				.append('Arduino Response: "' + content + '"'));
 			$("#acDebugArea").show();
 			if ("Beep Timeout" == content){
-				alert_class = "alert-danger";
+				alert_class = "alert-warning";
 				msg = "Could not verify command. You should probably try again.";
 			}else if ("Success" == content){
 				alert_class = "alert-success";
@@ -38,11 +38,11 @@
 	function init(){
 		// bind click to send A/C power toggle button
 		$("#btnAcPower").click(function(){
-			send_ac_command("#btnAcPower", "pwr-toggle");
+			send_ac_command("#btnAcPower", "Toggle");
 		});
 		// bind click to send A/C settings update button
 		$("#btnAcUpdate").click(function(){
-			send_ac_command("#btnAcUpdate", "pwr-leave");
+			send_ac_command("#btnAcUpdate", "Leave");
 		});
 		
 		$('.selectpicker').selectpicker();
