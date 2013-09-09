@@ -18,6 +18,9 @@
 			if ("Beep Timeout" == content){
 				alert_class = "alert-warning";
 				msg = "Could not verify command. You should probably try again.";
+			}else if ("Unsupported Command" == content){
+				alert_class = "alert-warning";
+				msg = "Sorry, but the requested state is not supported yet.";
 			}else if ("Success" == content){
 				alert_class = "alert-success";
 				msg = "Command executed successfully";
