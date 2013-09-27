@@ -4,4 +4,3 @@
 local_settings.py
 *~
 static/img/webcam/*
-HomeControlRpcServer/beep-thresh
