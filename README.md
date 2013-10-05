@@ -4,7 +4,7 @@ home-control
 My simple home control and automation framework, based on [Arduino boards for real-world-interaction](https://github.com/itamaro/home-control-RPC),
 and a [Django](https://www.djangoproject.com/) + [Bootstrap](http://getbootstrap.com/) web interface for online (mobile-friendly) access.
 
-TODO: Link to blog post.
+Also see [my blog post](http://itamaro.com/2013/10/04/ac-control-project-bringing-it-together/).
 
 A sample of the A/C control web-app from a mobile device:
 ![Mobile UI in Action](docs/UI-in-Mobile-Action.png)
