@@ -66,7 +66,7 @@ Clone and configure the home-control web-app:
 Sample `local_settings.py` file (modify to fit your stuff):
 
 ```python
-Debug = False
+DEBUG = False
 ALLOWED_HOSTS = ['localhost', 'ip-address', 'your.domain.com']
 STATIC_ROOT = '/var/www/home-control-web/static'
 STATICFILES_DIRS = ('/home/<username>/home-control-web/static', )
