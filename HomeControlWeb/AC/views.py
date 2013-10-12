@@ -24,7 +24,7 @@ def home(request):
     key = request.GET.get('key', None)
     if key:
         d['key'] = key
-    return render(request, 'ac.html', d)
+    return render(request, 'AC/ac.html', d)
 
 def command(request):
     _checkauth(request)

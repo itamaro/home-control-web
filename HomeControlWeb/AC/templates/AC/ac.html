@@ -1,0 +1,42 @@
+{% extends "lib/base.html" %}
+
+{% block title %}A/C Control{% endblock %}
+
+{% block content %}
+	<div id="acFeedbackArea"></div>
+	<label for="acMode">Mode</label>
+	<select id="acMode" class="selectpicker" data-style="btn-inverse" data-width="auto">
+		<option>Cool</option>
+		<option>Heat</option>
+		<option>Fan</option>
+	</select>
+	<label for="acFan">Fan Speed</label>
+	<select id="acFan" class="selectpicker" data-style="btn-inverse" data-width="auto">
+		<option>Auto</option>
+		<option>Low</option>
+		<option>Medium</option>
+		<option>High</option>
+	</select>
+	<br />
+	<label for="acTemp">Temp</label>
+	<div class="input-group">
+		<span class="input-group-btn">
+			<button class="btn btn-default glyphicon glyphicon-chevron-up form-control" type="button"
+					onClick="$('#acTemp').val(parseInt($('#acTemp').val())+1)"></button>
+		</span>
+		<span class="input-group-btn">
+			<button class="btn btn-default glyphicon glyphicon-chevron-down form-control" type="button"
+					onClick="$('#acTemp').val(parseInt($('#acTemp').val())-1)"></button>
+		</span>
+		<input type="number" id="acTemp" value="25" min="16" max="30" step="1" class="form-control" />
+		<span class="input-group-addon">&deg;C</span>
+	</div>
+	<br />
+	<button type="button" class="btn btn-primary" id="btnAcPower" data-loading-text="Sending...">Power Toggle</button>
+	<button type="button" class="btn btn-primary" id="btnAcUpdate" data-loading-text="Sending...">Update State</button>
+	<p><div id="acDebugArea"></div></p>
+{% endblock %}
+
+{% block extra_scripts %}
+	<script src="/static/AC/ac.js" type="text/javascript"></script>
+{% endblock %}

@@ -34,7 +34,7 @@ def home(request):
     key = request.GET.get('key', None)
     if key:
         d['key'] = key
-    return render(request, 'cam.html', d)
+    return render(request, 'cam/cam.html', d)
 
 def webcam(request):
     _checkauth(request)
