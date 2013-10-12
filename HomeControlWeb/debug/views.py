@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.conf import settings
 
 import common
+import common.views
 
 logger = logging.getLogger(__name__)
 
