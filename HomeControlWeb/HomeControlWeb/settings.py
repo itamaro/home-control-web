@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     'lib',
     'AC',
     'cam',
+    'debug',
 )
 
 # A sample logging configuration. The only tangible logging
