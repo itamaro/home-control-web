@@ -175,6 +175,8 @@ LOGGING = {
     }
 }
 
+NAVBAR_APPS_ORDER = ['AC', 'cam', ]
+
 try:
     from local_settings import *
 except ImportError:

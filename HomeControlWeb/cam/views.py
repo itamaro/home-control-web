@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.conf import settings
 
 import common
+import common.views
 
 HOME_CONTROL_WEBCAM_RPC_URL = getattr(settings, 'HOME_CONTROL_WEBCAM_RPC_URL',
                                 'http://localhost:8000/webcam.png')
@@ -22,8 +23,12 @@ HOME_CONTROL_WEBCAM_IMAGE_URL = getattr(settings,
 
 logger = logging.getLogger(__name__)
 
+def get_nav_name():
+    return 'Cameras'
+
 def home(request):
     d = common.checkpass(request)
+    d = common.views.get_nav_elements(d)
     return render(request, 'cam/cam.html', d)
 
 def webcam(request):

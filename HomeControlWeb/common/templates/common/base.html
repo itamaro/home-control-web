@@ -4,14 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Itamar Ostricher">
 
     <title>{% block title %}Home Control{% endblock %}</title>
 
     <link href="/static/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 	
-    <!-- Custom styles for this app -->
     <link href="/static/common/styles.css" rel="stylesheet">
   </head>
 
@@ -31,10 +30,9 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="#">Home</a></li>
-			{% url 'AC.views.home' as ac_url %}
-			{% url 'cam.views.home' as cam_url %}
-            <li class="{%if request.path == ac_url%}active{% endif %}"><a href="{{ac_url}}{% if key %}?key={{key}}{% endif %}">A/C</a></li>
-            <li class="{%if request.path == cam_url%}active{% endif %}"><a href="{{cam_url}}{% if key %}?key={{key}}{% endif %}">Cameras</a></li>
+			{% for nav_name, nav_url in nav_elements %}
+			<li class="{%if request.path == nav_url%}active{% endif %}"><a href="{{nav_url}}{% if key %}?key={{key}}{% endif %}">{{nav_name}}</a></li>
+			{% endfor %}
             <li><a href="#">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->

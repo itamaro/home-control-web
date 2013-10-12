@@ -6,14 +6,19 @@ from django.shortcuts import render
 from django.conf import settings
 
 import common
+import common.views
 
 HOME_CONTROL_ACCMD_RPC_URL = getattr(settings, 'HOME_CONTROL_ACCMD_RPC_URL',
                                 'http://localhost:8000/ac-command')
 
 logger = logging.getLogger(__name__)
 
+def get_nav_name():
+    return 'A/C'
+
 def home(request):
     d = common.checkpass(request)
+    d = common.views.get_nav_elements(d)
     return render(request, 'AC/ac.html', d)
 
 def command(request):
