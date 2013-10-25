@@ -1,7 +1,12 @@
 from django.conf.urls import patterns, include, url
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^jsreverse/$', 'django_js_reverse.views.urls_js', name='js_reverse'),
     url(r'^AC/', include('AC.urls')),
+    url(r'^ESXi/', include('ESXi.urls')),
     url(r'^cam/', include('cam.urls')),
     url(r'^debug/', include('debug.urls')),
+    url(r'^admin/', include(admin.site.urls)),
 )

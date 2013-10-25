@@ -1,0 +1,56 @@
+<h3><img src="/static/img/esxi-host-icon.png" /> {{host.name}}</h3>
+
+<table>
+	<tr>
+		<th>Host IP Address:</th>
+		<td>{{host.ip_addr}}</td>
+	</tr>
+	<tr>
+		<th>Host Power State:</th>
+		<td>
+		  <div id="hostTurnOn"{% if host.power_state == 'ON' %} style="display: none;"{% endif %}>
+			OFF (<a href="#" onclick="javascript:turn_on_host({{host.id}});"><i class="glyphicon glyphicon-play"></i> Turn On</a>)
+		  </div>
+		  <div id="hostShutdown"{% if host.power_state != 'ON' %} style="display: none;"{% endif %}>
+			ON (<a href="#" onclick="javascript:shutdown_host({{host.id}});"><i class="glyphicon glyphicon-off"></i> Shutdown</a>)
+		  </div>
+		  <div id="hostLoadbar" style="display: none;">
+		    <img src="/static/img/loadbar.blue.gif" width="100" height="22" />
+		  </div>
+		</td>
+		
+		<!-- <td>{{host.power_state}} (<a href="#" onclick="javascript:turn_on_host({{host.id}});">Turn on</a> | <a href="#" onclick="javascript:shutdown_host({{host.id}});">Shutdown</a>)</td> -->
+	</tr>
+	<tr>
+		<th>Last Update:</th>
+		<td><a href="#" onclick="javascript:update_remote_host_data();">{{host.updated|date:'d/m/Y, H:i:s'}} <i class="glyphicon glyphicon-refresh"></i></a>
+	</tr>
+</table>
+
+<h4>Virtual Machines ({{host.virtualmachine_set.all.count}})</h4>
+<table>
+	{% for vm in host.virtualmachine_set.all %}
+	<tr>
+		<td>
+		  <a href="#" onclick="javascript:get_vm_data_from_cache({{vm.id}});">
+			<img id="vmIcon-{{vm.id}}" src="/static/img/vm-icon-{{vm.power_state|lower}}.png" />
+		  </a>
+		</td>
+		<td>
+			{{vm.name}}
+			&nbsp;
+		</td>
+		<td>
+		  <div id="vmTurnOn-{{vm.id}}"{% if vm.power_state == 'ON' %} style="display: none;"{% endif %}>
+			<a href="#" onclick="javascript:turn_on_vm({{vm.id}});"><i class="glyphicon glyphicon-play"></i> Turn On</a>
+		  </div>
+		  <div id="vmShutdown-{{vm.id}}"{% if vm.power_state != 'ON' %} style="display: none;"{% endif %}>
+			<a href="#" onclick="javascript:shutdown_vm({{vm.id}}, '{{vm.name}}');"><i class="glyphicon glyphicon-off"></i> Shutdown</a>
+		  </div>
+		  <div id="vmLoadbar-{{vm.id}}" style="display: none;">
+		    <img src="/static/img/loadbar.blue.gif" width="100" height="22" />
+		  </div>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
