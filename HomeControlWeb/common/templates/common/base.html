@@ -9,7 +9,7 @@
     <title>{% block title %}Home Control{% endblock %}</title>
 
     <link href="/static/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	
     <link href="/static/common/styles.css" rel="stylesheet">
   </head>
@@ -46,9 +46,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/assets/js/jquery.js"></script>
     <script src="/static/bootstrap/js/bootstrap-select.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="{% url 'js_reverse' %}" type="text/javascript"></script>
     <script src="/static/assets/js/holder.js"></script>
     <script src="/static/assets/js/purl.js"></script>
 	{% block extra_scripts %}{% endblock %}
