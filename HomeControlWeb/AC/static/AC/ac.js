@@ -4,7 +4,8 @@
 	
 	function send_ac_command(btn, pwr){
 		$(btn).button("loading");
-		$.get("command?" + $.param({"key": $.url().param("key"),
+		$.get(Urls["ac-command"]() + "?" + $.param({
+					"key": $.url().param("key"),
 					"mode": $("#acMode").val(),
 					"fan": $("#acFan").val(),
 					"temp": $("#acTemp").val(),
