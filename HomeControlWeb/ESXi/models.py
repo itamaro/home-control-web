@@ -5,17 +5,16 @@ from django.db import models
 
 from common import load_json_from_url
 
-# Create your models here.
 logger = logging.getLogger(__name__)
 
 class EsxiHost(models.Model):
     POWER_ON = 'ON'
     POWER_OFF = 'OFF'
-    POWRE_UNKNOWN = 'TBD'
+    POWER_UNKNOWN = 'TBD'
     POWER_STATES = (
         (POWER_ON, 'On'),
         (POWER_OFF, 'Off'),
-        (POWRE_UNKNOWN, 'Unknown'),
+        (POWER_UNKNOWN, 'Unknown'),
     )
     name = models.CharField(max_length=100, unique=True)
     ip_addr = models.IPAddressField(verbose_name='IP Address')
@@ -27,7 +26,7 @@ class EsxiHost(models.Model):
     rpc_url = models.URLField()
     
     def __unicode__(self):
-        return '%s (%s)' % (self.name, self.ip_addr)
+        return self.name
     
     def is_cached_power_on(self):
         "Return True if host is On, based on local cache"
