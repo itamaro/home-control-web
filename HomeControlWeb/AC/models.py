@@ -42,7 +42,7 @@ class AcControl(models.Model):
     fan = models.PositiveSmallIntegerField(choices=FAN_SPEEDS,
                                             default=FAN_AUTO)
     temp = models.PositiveSmallIntegerField(default=25)
-    rpc_url = models.URLField()
+    rpc_url = models.URLField('http://localhost:8000/AC/')
     
     def __unicode__(self):
         return self.name
