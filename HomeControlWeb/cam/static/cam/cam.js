@@ -2,16 +2,19 @@
 	
 	init();
 	
-	function get_key_url(){
-		var key = $.url().param('key');
-		return (key ? '?key=' + key : '');
-	}
-	
 	function updateImage(){
 		$("#btnLoadImage").button('loading');
 		$('#webcamArea').html('<img src="/static/img/loading.gif" />');
-		$.get("webcam" + get_key_url(), function(content){
-			$('#webcamArea').html(content);
+		$.get(Urls["cam-snapshot"]() + "?" + $.param({
+					"key": $.url().param("key")}),
+		function(content){
+			if("ERROR" == content["status"]){
+				$('#webcamArea').html(content["msg"]);
+			}else if("SUCCESS" == content["status"]){
+				$('#webcamArea').html('<img src="' + content["image-src"] + '" />');
+			}else{
+				$('#webcamArea').html("Something went terribly wrong :-(");
+			}
 			$("#btnLoadImage").button('reset');
 		});
 	}
