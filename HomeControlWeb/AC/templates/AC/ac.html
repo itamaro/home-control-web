@@ -6,16 +6,15 @@
 	<div id="acFeedbackArea"></div>
 	<label for="acMode">Mode</label>
 	<select id="acMode" class="selectpicker" data-style="btn-inverse" data-width="auto">
-		<option>Cool</option>
-		<option>Heat</option>
-		<option>Fan</option>
+	{% for value, text in ac.MODE_MODES %}
+		<option value="{{value}}">{{text}}</option>
+	{% endfor %}
 	</select>
 	<label for="acFan">Fan Speed</label>
 	<select id="acFan" class="selectpicker" data-style="btn-inverse" data-width="auto">
-		<option>Auto</option>
-		<option>Low</option>
-		<option>Medium</option>
-		<option>High</option>
+	{% for value, text in ac.FAN_SPEEDS %}
+		<option value="{{value}}">{{text}}</option>
+	{% endfor %}
 	</select>
 	<br />
 	<label for="acTemp">Temp</label>

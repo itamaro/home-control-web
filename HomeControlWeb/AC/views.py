@@ -16,12 +16,16 @@ def get_nav_name():
     return 'A/C'
 
 def home(request):
+    # TODO: fix object selection
+    ac = AcControl.objects.all()[0]
     d = common.checkpass(request)
     d = common.views.get_nav_elements(d)
+    d['ac'] = ac
     return render(request, 'AC/ac.html', d)
 
 def command(request):
     common.checkpass(request)
+    # TODO: fix object selection
     ac = AcControl.objects.all()[0]
     res = ac.command(request.GET)
     return HttpResponse(json.dumps(res), content_type='applicatoin/json')

@@ -42,7 +42,7 @@ class AcControl(models.Model):
     fan = models.PositiveSmallIntegerField(choices=FAN_SPEEDS,
                                             default=FAN_AUTO)
     temp = models.PositiveSmallIntegerField(default=25)
-    rpc_url = models.URLField('http://localhost:8000/AC/')
+    rpc_url = models.URLField(default='http://localhost:8000/AC/')
     
     def __unicode__(self):
         return self.name
@@ -53,7 +53,7 @@ class AcControl(models.Model):
                             fan=params.get('fan'), temp=params.get('temp'))
         # Update cached state for successful command
         if 'Success' == res:
-            if 'Leave' == params.get('power'):
+            if '1' == params.get('power'):
                 self.power_state = self.POWER_ON
             else:
                 if self.POWER_ON == self.power_state:
@@ -62,14 +62,8 @@ class AcControl(models.Model):
                     self.power_state = self.POWER_ON
                 else:
                     self.power_state = self.POWER_UNKNOWN
-            for val, title in self.MODE_MODES:
-                if params.get('mode') == title:
-                    self.mode = val
-                    break
-            for val, title in self.FAN_SPEEDS:
-                if params.get('fan') == title:
-                    self.fan = val
-                    break
+            self.mode = int(params.get('mode'))
+            self.fan = int(params.get('fan'))
             self.temp = int(params.get('temp'))
             self.save()
         return res

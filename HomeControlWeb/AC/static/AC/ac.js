@@ -42,11 +42,11 @@
 	function init(){
 		// bind click to send A/C power toggle button
 		$("#btnAcPower").click(function(){
-			send_ac_command("#btnAcPower", "Toggle");
+			send_ac_command("#btnAcPower", "0");
 		});
 		// bind click to send A/C settings update button
 		$("#btnAcUpdate").click(function(){
-			send_ac_command("#btnAcUpdate", "Leave");
+			send_ac_command("#btnAcUpdate", "1");
 		});
 		
 		$('.selectpicker').selectpicker();
