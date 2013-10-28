@@ -3,6 +3,5 @@
 *.pyc
 local_settings.py
 *~
-static/img/webcam/*
 home_control.db
 migrations

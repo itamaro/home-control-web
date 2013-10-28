@@ -21,10 +21,13 @@ def home(request):
 
 def webcam(request):
     common.checkpass(request)
+    res = {u'status': u'ERROR', u'msg': u'Failed Retrieving Image'}
     # TODO: fix object selection
-    cam = WebCamProxy.objects.all()[0]
-    if cam.get_snapshot():
-        res = {u'status': u'SUCCESS', u'image-src': cam.image_url}
-    else:
-        res = {u'status': u'ERROR', u'msg': u'Failed Retrieving Image'}
+    try:
+        cam = WebCamProxy.objects.all()[0]
+        snapshot_url = cam.get_snapshot()
+        if snapshot_url:
+            res = {u'status': u'SUCCESS', u'image-src': snapshot_url}
+    except Exception, ex:
+        logger.error('Error in get_snapshot: %s', ex)
     return HttpResponse(json.dumps(res), content_type='application/json')
