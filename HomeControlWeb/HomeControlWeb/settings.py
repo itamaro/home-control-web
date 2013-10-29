@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'django_js_reverse',
+    'sillyauth',
     'common',
     'AC',
     'ESXi',
