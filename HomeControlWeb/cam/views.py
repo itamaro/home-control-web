@@ -1,10 +1,10 @@
 import logging
 import json
-import urllib
 
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 
+import common
 from cam.models import WebCamProxy
 
 logger = logging.getLogger(__name__)
@@ -24,9 +24,7 @@ def webcam(request):
         snapshot_url = cam.get_snapshot()
         if snapshot_url:
             key = getattr(request, 'silly_auth_pass', None)
-            if key:
-                snapshot_url = '%s?%s' % (snapshot_url,
-                                          urllib.urlencode({'key': key}))
+            snapshot_url = common.update_url_qs(snapshot_url, key=key)
             res = {u'status': u'SUCCESS', u'image-src': snapshot_url}
     except Exception, ex:
         logger.error('Error in get_snapshot: %s', ex)

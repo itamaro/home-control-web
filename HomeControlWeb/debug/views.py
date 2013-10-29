@@ -2,9 +2,6 @@ import logging
 from django.template.response import TemplateResponse
 from django.conf import settings
 
-import common
-import common.views
-
 logger = logging.getLogger(__name__)
 
 def navbar_item():
