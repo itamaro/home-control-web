@@ -1,36 +1,31 @@
-# Create your views here.
 import logging
 import json
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404
-from django.conf import settings
 
-import common
-import common.views
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django.template.response import TemplateResponse
 
 from ESXi.models import EsxiHost, VirtualMachine
 
 logger = logging.getLogger(__name__)
 
-def get_nav_name():
-    return 'ESXi'
+def navbar_item():
+    "Return (lookup_view, nav_text) tuple for current app"
+    return ('rhosts-home', 'Remote Hosts')
     
 def home(request):
-    d = common.checkpass(request)
-    d = common.views.get_nav_elements(d)
     hosts_list = EsxiHost.objects.order_by('name')
-    d['esxi_hosts'] = hosts_list
-    return render(request, 'ESXi/esxi.html', d)
+    return TemplateResponse(request, 'ESXi/esxi.html',
+                            {'esxi_hosts' : hosts_list})
 
 def get_host_data_from_cache(request, host_id):
     "Renders host data from local cache"
-    d = common.checkpass(request)
-    d['host'] = get_object_or_404(EsxiHost, pk=host_id)
-    return render(request, 'ESXi/esxi-host-info.html', d)
+    host = get_object_or_404(EsxiHost, pk=host_id)
+    return TemplateResponse(request, 'ESXi/esxi-host-info.html',
+                            {'host': host})
 
 def get_vm_data_from_cache(request, vm_id):
     "Renders VM data from local cache"
-    d = common.checkpass(request)
     vm = get_object_or_404(VirtualMachine, pk=vm_id)
     return HttpResponse(json.dumps({'power': vm.power_state}),
                         content_type='application/json')

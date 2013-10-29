@@ -1,3 +1,5 @@
+{% load silly_url %}
+{% load navbar %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,8 +32,8 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="#">Home</a></li>
-			{% for nav_name, nav_url in nav_elements %}
-			<li class="{%if request.path == nav_url%}active{% endif %}"><a href="{{nav_url}}{% if key %}?key={{key}}{% endif %}">{{nav_name}}</a></li>
+			{% for lookup_view, text in navbar_apps %}
+			<li class="{% nav_item_active lookup_view %}"><a href="{% silly_url lookup_view %}">{{text}}</a></li>
 			{% endfor %}
             <li><a href="#">About</a></li>
           </ul>
@@ -49,7 +51,7 @@
 	<script type="text/javascript" src="/static/assets/js/jquery.js"></script>
     <script src="/static/bootstrap/js/bootstrap-select.min.js"></script>
 	<script src="/static/bootstrap/js/bootstrap.min.js"></script>
-	<script src="{% url 'js_reverse' %}" type="text/javascript"></script>
+	<script src="{% silly_url 'js_reverse' %}" type="text/javascript"></script>
     <script src="/static/assets/js/holder.js"></script>
     <script src="/static/assets/js/purl.js"></script>
 	{% block extra_scripts %}{% endblock %}

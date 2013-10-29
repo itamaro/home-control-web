@@ -100,6 +100,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'sillyauth.middleware.SillyAuthMiddleware',
+    'common.middleware.NavbarMiddleware',
 )
 
 ROOT_URLCONF = 'HomeControlWeb.urls'
@@ -183,7 +185,15 @@ LOGGING = {
     }
 }
 
-NAVBAR_APPS_ORDER = ['AC', 'ESXi', 'cam', ]
+# Secret password for Silly Auth authentication middleware
+#SILLY_AUTH_PASS = ''
+
+# Order of apps in navbar
+NAVBAR_APPS = (
+    'AC',
+    'ESXi',
+    'cam',
+)
 
 try:
     from local_settings import *

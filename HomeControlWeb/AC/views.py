@@ -1,30 +1,24 @@
 import urllib
 import logging
 import json
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.conf import settings
 
-import common
-import common.views
+from django.http import HttpResponse
+from django.template.response import TemplateResponse
 
 from AC.models import AcControl
 
 logger = logging.getLogger(__name__)
 
-def get_nav_name():
-    return 'A/C'
+def navbar_item():
+    "Return (lookup_view, nav_text) tuple for current app"
+    return ('AC-home', 'A/C')
 
 def home(request):
     # TODO: fix object selection
     ac = AcControl.objects.all()[0]
-    d = common.checkpass(request)
-    d = common.views.get_nav_elements(d)
-    d['ac'] = ac
-    return render(request, 'AC/ac.html', d)
+    return TemplateResponse(request, 'AC/ac.html', {'ac': ac})
 
 def command(request):
-    common.checkpass(request)
     # TODO: fix object selection
     ac = AcControl.objects.all()[0]
     res = ac.command(request.GET)
