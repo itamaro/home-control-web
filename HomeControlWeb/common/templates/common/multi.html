@@ -1,0 +1,36 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+<div id="feedbackArea"></div>
+
+<label for="instSelector">{% block inst_label %}Select Instance{% endblock %}</label>
+<select id="instSelector" class="selectpicker show-tick" data-style="btn-inverse" data-width="auto">
+{% for instance in inst_objects %}
+	<option value="{{instance.id}}" {% if active_inst and instance.id == active_inst.id %}selected{% endif %}>{{instance}}</option>
+{% endfor %}
+</select>
+
+{% if active_inst %}
+<div id="instDetailsArea">
+{% block instance_details %}
+{% endblock %}
+</div>
+{% endif %}
+
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+	<div class="modal-body">
+	  <img src="/static/img/loading.gif" />
+	</div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endblock content %}
+
+{% block extra_scripts %}
+<script type="text/javascript">
+	var details_view_name = "{% block details_view_name %}{% endblock %}";
+</script>
+<script src="/static/{% block app_script_path %}{% endblock %}" type="text/javascript"></script>
+{% endblock %}

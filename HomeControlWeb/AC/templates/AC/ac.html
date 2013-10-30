@@ -1,41 +1,42 @@
-{% extends "common/base.html" %}
+{% extends "common/multi.html" %}
 
 {% block title %}A/C Control{% endblock %}
+{% block details_view_name %}AC-control-form{% endblock %}
+{% block app_script_path %}AC/ac.js{% endblock %}
+{% block inst_label %}Controlled A/C{% endblock %}
 
-{% block content %}
-	<div id="acFeedbackArea"></div>
-	<label for="acMode">Mode</label>
-	<select id="acMode" class="selectpicker" data-style="btn-inverse" data-width="auto">
-	{% for value, text in ac.MODE_MODES %}
-		<option value="{{value}}">{{text}}</option>
-	{% endfor %}
-	</select>
-	<label for="acFan">Fan Speed</label>
-	<select id="acFan" class="selectpicker" data-style="btn-inverse" data-width="auto">
-	{% for value, text in ac.FAN_SPEEDS %}
-		<option value="{{value}}">{{text}}</option>
-	{% endfor %}
-	</select>
-	<br />
-	<label for="acTemp">Temp</label>
-	<div class="input-group">
-		<span class="input-group-btn">
-			<button class="btn btn-default glyphicon glyphicon-chevron-up form-control" type="button"
-					onClick="$('#acTemp').val(parseInt($('#acTemp').val())+1)"></button>
-		</span>
-		<span class="input-group-btn">
-			<button class="btn btn-default glyphicon glyphicon-chevron-down form-control" type="button"
-					onClick="$('#acTemp').val(parseInt($('#acTemp').val())-1)"></button>
-		</span>
-		<input type="number" id="acTemp" value="25" min="16" max="30" step="1" class="form-control" />
-		<span class="input-group-addon">&deg;C</span>
-	</div>
-	<br />
-	<button type="button" class="btn btn-primary" id="btnAcPower" data-loading-text="Sending...">Power Toggle</button>
-	<button type="button" class="btn btn-primary" id="btnAcUpdate" data-loading-text="Sending...">Update State</button>
-	<p><div id="acDebugArea"></div></p>
-{% endblock %}
-
-{% block extra_scripts %}
-	<script src="/static/AC/ac.js" type="text/javascript"></script>
-{% endblock %}
+{% block instance_details %}
+{% with active_inst as ac %}
+<h3>{{ac}}</h3>
+<label for="acMode">Mode</label>
+<select id="acMode" class="selectpicker" data-style="btn-inverse" data-width="auto">
+{% for value, text in ac.MODE_MODES %}
+	<option value="{{value}}">{{text}}</option>
+{% endfor %}
+</select>
+<label for="acFan">Fan Speed</label>
+<select id="acFan" class="selectpicker" data-style="btn-inverse" data-width="auto">
+{% for value, text in ac.FAN_SPEEDS %}
+	<option value="{{value}}">{{text}}</option>
+{% endfor %}
+</select>
+<br />
+<label for="acTemp">Temp</label>
+<div class="input-group">
+	<span class="input-group-btn">
+		<button class="btn btn-default glyphicon glyphicon-chevron-up form-control" type="button"
+				onClick="$('#acTemp').val(parseInt($('#acTemp').val())+1)"></button>
+	</span>
+	<span class="input-group-btn">
+		<button class="btn btn-default glyphicon glyphicon-chevron-down form-control" type="button"
+				onClick="$('#acTemp').val(parseInt($('#acTemp').val())-1)"></button>
+	</span>
+	<input type="number" id="acTemp" value="25" min="16" max="30" step="1" class="form-control" />
+	<span class="input-group-addon">&deg;C</span>
+</div>
+<br />
+<button type="button" class="btn btn-primary" id="btnAcPower" data-loading-text="Sending...">Power Toggle</button>
+<button type="button" class="btn btn-primary" id="btnAcUpdate" data-loading-text="Sending...">Update State</button>
+<p><div id="acDebugArea"></div></p>
+{% endwith %}
+{% endblock instance_details %}

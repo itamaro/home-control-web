@@ -3,6 +3,7 @@ import logging
 import json
 
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 
 from AC.models import AcControl
@@ -14,12 +15,20 @@ def navbar_item():
     return ('AC-home', 'A/C')
 
 def home(request):
-    # TODO: fix object selection
-    ac = AcControl.objects.all()[0]
-    return TemplateResponse(request, 'AC/ac.html', {'ac': ac})
+    return TemplateResponse(request, 'AC/ac.html', {
+            'inst_objects': AcControl.objects.all(),
+        })
 
-def command(request):
-    # TODO: fix object selection
-    ac = AcControl.objects.all()[0]
+def control_form(request, ac_id):
+    "Render A/C control form for selected A/C"
+    ac = get_object_or_404(AcControl, pk=ac_id)
+    return TemplateResponse(request, 'AC/ac.html', {
+            'inst_objects': AcControl.objects.all(),
+            'active_inst': ac,
+        })
+
+def command(request, ac_id):
+    "Send A/C command to selected A/C and return result"
+    ac = get_object_or_404(AcControl, pk=ac_id)
     res = ac.command(request.GET)
     return HttpResponse(json.dumps(res), content_type='applicatoin/json')
