@@ -1,12 +1,13 @@
-{% extends "common/base.html" %}
+{% extends "common/multi.html" %}
 
-{% block title %}Home Camera Control{% endblock %}
+{% block title %}Webcam Control{% endblock %}
+{% block details_view_name %}webcam{% endblock %}
+{% block app_script_path %}cam/cam.js{% endblock %}
+{% block inst_label %}Active Webcam{% endblock %}
 
-{% block content %}
+{% block instance_details %}
+{% with active_inst as cam %}
 	<button type="button" class="btn btn-primary" id="btnLoadImage" data-loading-text="Loading...">Get Image</button>
 	<p><div id="webcamArea"></div></p>
-{% endblock %}
-
-{% block extra_scripts %}
-	<script src="/static/cam/cam.js" type="text/javascript"></script>
-{% endblock %}
+{% endwith %}
+{% endblock instance_details %}

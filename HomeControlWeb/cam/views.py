@@ -2,6 +2,7 @@ import logging
 import json
 
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 
 import common
@@ -14,13 +15,23 @@ def navbar_item():
     return ('cam-home', 'Webcams')
 
 def home(request):
-    return TemplateResponse(request, 'cam/cam.html')
+    return TemplateResponse(request, 'cam/cam.html', {
+            'inst_objects': WebCamProxy.objects.all(),
+        })
 
-def webcam(request):
+def webcam(request, cam_id):
+    "Render webcam view for selected webcam"
+    cam = get_object_or_404(WebCamProxy, pk=cam_id)
+    return TemplateResponse(request, 'cam/cam.html', {
+            'inst_objects': WebCamProxy.objects.all(),
+            'active_inst': cam,
+        })
+
+def snapshot(request, cam_id):
+    "Send snapshot command and return result"
     res = {u'status': u'ERROR', u'msg': u'Failed Retrieving Image'}
-    # TODO: fix object selection
     try:
-        cam = WebCamProxy.objects.all()[0]
+        cam = WebCamProxy.objects.get(pk=cam_id)
         snapshot_url = cam.get_snapshot()
         if snapshot_url:
             key = getattr(request, 'silly_auth_pass', None)
