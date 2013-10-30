@@ -34,20 +34,27 @@ class AcControl(models.Model):
         (FAN_HIGH, 'High'),
     )
     
+    # A/C name
     name = models.CharField(max_length=100, unique=True)
+    # Cached power state from last successful command
     power_state = models.CharField(max_length=3, choices=POWER_STATES,
                                    default=POWER_UNKNOWN)
+    # Cached mode from last successful command
     mode = models.PositiveSmallIntegerField(choices=MODE_MODES,
                                             default=MODE_COOL)
+    # Cached fan speed from last successful command
     fan = models.PositiveSmallIntegerField(choices=FAN_SPEEDS,
                                             default=FAN_AUTO)
+    # Cached temperature from last successful command
     temp = models.PositiveSmallIntegerField(default=25)
+    # A/C-RPC URL
     rpc_url = models.URLField(default='http://localhost:8000/AC/')
     
     def __unicode__(self):
         return self.name
     
     def command(self, params):
+        "Send A/C command via RPC app and update state based on response"
         res = load_json_from_url(self.rpc_url, 'command',
                             pwr=params.get('power'), mode=params.get('mode'),
                             fan=params.get('fan'), temp=params.get('temp'))
