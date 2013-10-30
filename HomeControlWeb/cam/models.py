@@ -10,7 +10,9 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 class WebCamProxy(models.Model):
+    # Webcam name
     name = models.CharField(max_length=100, unique=True)
+    # Webcam-RPC URL
     rpc_url = models.URLField(default='http://localhost:8000/cam/snapshot/')
     # Path relative to MEDIA_ROOT to store the webcam snapshot
     # (file name without extension - extension is deduced from mime type)
@@ -22,6 +24,7 @@ class WebCamProxy(models.Model):
         return self.name
     
     def get_snapshot(self):
+        "Retrieve webcam snapshot from RPC, save in `snapshot_path`"
         u = urllib2.urlopen(self.rpc_url)
         http_msg = u.info()
         res_content_type = http_msg.get('content-type')
