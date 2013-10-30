@@ -3,12 +3,14 @@
 {% block content %}
 <div id="feedbackArea"></div>
 
+<div{% if 2 > inst_objects.count %} style="display:none;">{% endif %}>
 <label for="instSelector">{% block inst_label %}Select Instance{% endblock %}</label>
 <select id="instSelector" class="selectpicker show-tick" data-style="btn-inverse" data-width="auto">
 {% for instance in inst_objects %}
 	<option value="{{instance.id}}" {% if active_inst and instance.id == active_inst.id %}selected{% endif %}>{{instance}}</option>
 {% endfor %}
 </select>
+</div>
 
 {% if active_inst %}
 <div id="instDetailsArea">
