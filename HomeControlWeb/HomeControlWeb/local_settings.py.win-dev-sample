@@ -1,5 +1,5 @@
 # Local Django settings for HomeControlWeb project (overriding generic setting.py).
-WORKSPACE_ROOT = 'C:/Users/<name>/Workspaces/home-control/'
+WORKSPACE_ROOT = 'C:/Users/<name>/Workspaces/home-control/home-control-web/'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -15,22 +15,8 @@ STATICFILES_DIRS = (
     WORKSPACE_ROOT + 'static',
 )
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-    'django_js_reverse',
-    'sillyauth',
-    'common',
-    'AC',
-    'cam',
+from settings import INSTALLED_APPS
+INSTALLED_APPS += (
     'debug',
     'south',
 )
