@@ -143,10 +143,6 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
-        'ESXi': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
     }
 }
 
@@ -156,7 +152,6 @@ LOGGING = {
 # Order of apps in navbar
 NAVBAR_APPS = (
     'AC',
-    'ESXi',
     'cam',
 )
 
