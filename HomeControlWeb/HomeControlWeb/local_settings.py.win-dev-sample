@@ -1,0 +1,51 @@
+# Local Django settings for HomeControlWeb project (overriding generic setting.py).
+WORKSPACE_ROOT = 'C:/Users/<name>/Workspaces/home-control/'
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+MEDIA_ROOT = WORKSPACE_ROOT + 'media'
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    WORKSPACE_ROOT + 'static',
+)
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # Uncomment the next line to enable the admin:
+    'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
+    'django_js_reverse',
+    'sillyauth',
+    'common',
+    'AC',
+    'cam',
+    'debug',
+    'south',
+)
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '#hhpd0s&!dn)&!ki#q+!ncx6n7=%jzbkj=g1uu5k-8_#1k+*6a'
+
+# Secret password for Silly Auth authentication middleware
+#SILLY_AUTH_PASS = ''
+
+# Order of apps in navbar
+NAVBAR_APPS = (
+    'AC',
+    'cam',
+    'debug',
+)
+
+# Any other setting from settings.py you'd like to override...
