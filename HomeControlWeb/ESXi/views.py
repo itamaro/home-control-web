@@ -14,15 +14,17 @@ def navbar_item():
     return ('rhosts-home', 'Remote Hosts')
     
 def home(request):
-    hosts_list = EsxiHost.objects.order_by('name')
-    return TemplateResponse(request, 'ESXi/esxi.html',
-                            {'esxi_hosts' : hosts_list})
+    return TemplateResponse(request, 'ESXi/esxi.html', {
+            'inst_objects': EsxiHost.objects.all(),
+        })
 
-def get_host_data_from_cache(request, host_id):
+def host_data_from_cache(request, host_id):
     "Renders host data from local cache"
     host = get_object_or_404(EsxiHost, pk=host_id)
-    return TemplateResponse(request, 'ESXi/esxi-host-info.html',
-                            {'host': host})
+    return TemplateResponse(request, 'ESXi/esxi.html', {
+            'inst_objects': EsxiHost.objects.all(),
+            'active_inst': host,
+        })
 
 def get_vm_data_from_cache(request, vm_id):
     "Renders VM data from local cache"
@@ -31,10 +33,10 @@ def get_vm_data_from_cache(request, vm_id):
                         content_type='application/json')
 
 def update_remote_host_data(request, host_id):
-    "Update local cache from remote ESXi host"
+    "Update local cache from remote host"
     host = get_object_or_404(EsxiHost, pk=host_id)
     host.update_from_rpc()
-    return get_host_data_from_cache(request, host_id)
+    return HttpResponse('ACK')
 
 def turn_on_vm(request, vm_id):
     "Turn on VM on ESXi host"

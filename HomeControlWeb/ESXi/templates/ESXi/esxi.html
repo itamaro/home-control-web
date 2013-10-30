@@ -1,27 +1,69 @@
-{% extends "common/base.html" %}
+{% extends "common/multi.html" %}
 
-{% block title %}ESXi Monitor & Control{% endblock %}
+{% block title %}Remote Hosts Monitor & Control{% endblock %}
+{% block details_view_name %}rhost-cached-data{% endblock %}
+{% block app_script_path %}ESXi/esxi.js{% endblock %}
+{% block inst_label %}Active Remote Host{% endblock %}
 
-{% block content %}
-<label for="esxiHost">ESXi Host: <img src="/static/img/esxi-host-icon.png" /></label>
-<select id="esxiHost" class="selectpicker show-tick" data-style="btn-inverse" data-width="auto">
-{% for host in esxi_hosts %}
-	<option value="{{host.id}}">{{host.name}} ({{host.ip_addr}})</option>
-{% endfor %}
-</select>
+{% block instance_details %}
+{% with active_inst as host %}
 <div id="hostDetailsArea">
-</div>
-<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
-	<div class="modal-body">
-	  <img src="/static/img/loading.gif" />
-	</div>
-  </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-{% endblock %}
 
-{% block extra_scripts %}
-	<script src="/static/ESXi/esxi.js" type="text/javascript"></script>
-{% endblock %}
+<h3><img src="/static/img/esxi-host-icon.png" /> {{host.name}}</h3>
+
+<table>
+	<tr>
+		<th>Host IP Address:</th>
+		<td>{{host.ip_addr}}</td>
+	</tr>
+	<tr>
+		<th>Host Power State:</th>
+		<td>
+		  <div id="hostTurnOn"{% if host.power_state == 'ON' %} style="display: none;"{% endif %}>
+			OFF (<a href="#" onclick="javascript:turn_on_host({{host.id}});"><i class="glyphicon glyphicon-play"></i> Turn On</a>)
+		  </div>
+		  <div id="hostShutdown"{% if host.power_state != 'ON' %} style="display: none;"{% endif %}>
+			ON (<a href="#" onclick="javascript:shutdown_host({{host.id}});"><i class="glyphicon glyphicon-off"></i> Shutdown</a>)
+		  </div>
+		  <div id="hostLoadbar" style="display: none;">
+		    <img src="/static/img/loadbar.blue.gif" width="100" height="22" />
+		  </div>
+		</td>
+	</tr>
+	<tr>
+		<th>Last Update:</th>
+		<td><a href="#" onclick="javascript:update_remote_host_data();">{{host.updated|date:'d/m/Y, H:i:s'}} <i class="glyphicon glyphicon-refresh"></i></a>
+	</tr>
+</table>
+
+<h4>Virtual Machines ({{host.virtualmachine_set.all.count}})</h4>
+<table>
+	{% for vm in host.virtualmachine_set.all %}
+	<tr>
+		<td>
+		  <a href="#" onclick="javascript:get_vm_data_from_cache({{vm.id}});">
+			<img id="vmIcon-{{vm.id}}" src="/static/img/vm-icon-{{vm.power_state|lower}}.png" />
+		  </a>
+		</td>
+		<td>
+			{{vm.name}}
+			&nbsp;
+		</td>
+		<td>
+		  <div id="vmTurnOn-{{vm.id}}"{% if vm.power_state == 'ON' %} style="display: none;"{% endif %}>
+			<a href="#" onclick="javascript:turn_on_vm({{vm.id}});"><i class="glyphicon glyphicon-play"></i> Turn On</a>
+		  </div>
+		  <div id="vmShutdown-{{vm.id}}"{% if vm.power_state != 'ON' %} style="display: none;"{% endif %}>
+			<a href="#" onclick="javascript:shutdown_vm({{vm.id}}, '{{vm.name}}');"><i class="glyphicon glyphicon-off"></i> Shutdown</a>
+		  </div>
+		  <div id="vmLoadbar-{{vm.id}}" style="display: none;">
+		    <img src="/static/img/loadbar.blue.gif" width="100" height="22" />
+		  </div>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+
+</div>
+{% endwith %}
+{% endblock instance_details %}

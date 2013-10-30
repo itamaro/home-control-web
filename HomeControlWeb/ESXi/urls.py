@@ -4,7 +4,7 @@ from ESXi import views
 
 urlpatterns = patterns('',
     url(r'^$', views.home, name='rhosts-home'),
-    url(r'^get-data/host/(?P<host_id>\d+)/$', views.get_host_data_from_cache, name='rhost-get-cache-data'),
+    url(r'^(?P<host_id>\d+)/$', views.host_data_from_cache, name='rhost-cached-data'),
     url(r'^update-remote-data/(?P<host_id>\d+)/$', views.update_remote_host_data, name='rhost-update-remote-data'),
     url(r'^turn-on/vm/(?P<vm_id>\d+)/$', views.turn_on_vm, name='rhost-turn-on-vm'),
     url(r'^shutdown/vm/(?P<vm_id>\d+)/$', views.shutdown_vm, name='rhost-shutdown-vm'),

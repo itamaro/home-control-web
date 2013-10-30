@@ -2,35 +2,18 @@
 	init();
 	
 	function init(){
-		$("#esxiHost").change(get_host_data_from_cache);
-		
-		$('.selectpicker').selectpicker();
-		
-		get_host_data_from_cache();
 	}
 });
 
-function load_view_to_details(view_name){
-	host_id = $("#esxiHost").val();
-	$.get(Urls[view_name](host_id) + "?" + $.param({"key": $.url().param("key")}),
-	function(content){
-		$("#hostDetailsArea").html(content);
-		$("#loadingModal").modal('hide');
+function update_remote_host_data(){
+	$("#loadingModal").modal({keyboard: false});
+	$.get(silly_url(Urls["rhost-update-remote-data"](active_id())), function(content){
+		location.reload();
 	});
 }
 
-function get_host_data_from_cache(){
-	load_view_to_details("rhost-get-cache-data");
-}
-
-function update_remote_host_data(){
-	$("#loadingModal").modal({keyboard: false});
-	load_view_to_details("rhost-update-remote-data");
-}
-
 function get_vm_data_from_cache(vm_id){
-	$.get(Urls["rhost-get-cache-vm-data"](vm_id) + "?" + $.param({"key": $.url().param("key")}),
-	function(content){
+	$.get(silly_url(Urls["rhost-get-cache-vm-data"](vm_id)), function(content){
 		power = content["power"].toLowerCase();
 		$("#vmIcon-" + vm_id).attr("src", "/static/img/vm-icon-" + power + ".png");
 		$("#vmLoadbar-" + vm_id).hide();
@@ -43,8 +26,7 @@ function change_vm_power_state(vm_id, target_view){
 	$("#vmLoadbar-" + vm_id).show();
 	$("#vmShutdown-" + vm_id).hide();
 	$("#vmTurnOn-" + vm_id).hide();
-	$.get(Urls[target_view](vm_id) + "?" + $.param({"key": $.url().param("key")}),
-	function(content){
+	$.get(silly_url(Urls[target_view](vm_id)), function(content){
 		get_vm_data_from_cache(vm_id);
 	});
 }
@@ -63,9 +45,8 @@ function change_host_power_state(host_id, target_view){
 	$("#hostLoadbar").show();
 	$("#hostShutdown").hide();
 	$("#hostTurnOn").hide();
-	$.get(Urls[target_view](host_id) + "?" + $.param({"key": $.url().param("key")}),
-	function(content){
-		get_host_data_from_cache();
+	$.get(silly_url(Urls[target_view](host_id)), function(content){
+		location.reload();
 	});
 }
 
